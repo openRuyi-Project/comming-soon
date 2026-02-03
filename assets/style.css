@@ -1,0 +1,220 @@
+/* 全局重置 */
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #050505; /* 深色背景 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+/* ---------------------------
+   星空背景 Canvas
+   --------------------------- */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* 在最底层 */
+    opacity: 0.6; /* 星星稍微暗一点，不抢戏 */
+}
+
+/* ---------------------------
+   新增：顶部毛玻璃公告胶囊
+   --------------------------- */
+.notification-pill {
+    position: absolute;
+    top: 30px; /* 距离顶部的距离 */
+    
+    /* 毛玻璃效果核心样式 */
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari 兼容 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    padding: 10px 24px;
+    border-radius: 50px; /* 圆润的胶囊形状 */
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    z-index: 30; /* 保证在最上层，方便点击 */
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4); /* 柔和的阴影 */
+    animation: slideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1); /* 优雅的滑入动画 */
+}
+
+/* 公告中的图标 */
+.notice-icon {
+    font-size: 1.1em;
+}
+
+/* 公告中的链接样式 */
+.notification-pill a {
+    color: #ffbb35; /* 使用 Logo 同款橙黄色 */
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dashed rgba(255, 187, 53, 0.4);
+    transition: all 0.2s;
+    margin-left: 4px;
+}
+
+.notification-pill a:hover {
+    color: #ffe225; /* 悬停变亮 */
+    border-bottom-style: solid;
+    text-shadow: 0 0 8px rgba(255, 187, 53, 0.5);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ---------------------------
+   中间的文字容器
+   --------------------------- */
+.container {
+    z-index: 10;
+    text-align: center;
+    position: relative;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 第一行：openRuyi */
+.brand-name {
+    font-size: 5rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: #ffffff; /* 白色文字 */
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    text-transform: none;
+}
+
+/* 第二行：COMING SOON */
+.status-text {
+    font-size: 1.5rem; 
+    font-weight: 800;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    
+    /* 发光动画 */
+    animation: neon-cycle 4s ease-in-out infinite;
+    color: #fff; /* 核心文字白色 */
+}
+
+/* 霓虹发光循环动画 */
+@keyframes neon-cycle {
+    0%, 100% {
+        color: #3658d8;
+        text-shadow: 0 0 10px #3658d8, 0 0 20px #3658d8;
+    }
+    33% {
+        color: #ffbb35;
+        text-shadow: 0 0 10px #ffbb35, 0 0 20px #ffbb35;
+    }
+    66% {
+        color: #ffe225;
+        text-shadow: 0 0 10px #ffe225, 0 0 20px #ffe225;
+    }
+}
+
+/* ---------------------------
+   弹跳 Logo (DVD Screen Saver 风格)
+   --------------------------- */
+#bouncing-logo {
+    position: absolute;
+    width: 100px;
+    height: auto; 
+    top: 0;
+    left: 0;
+    will-change: transform;
+    z-index: 5; /* 在星空之上，文字之下 */
+    
+    /* 修改点：降低透明度 (0.9 -> 0.3) */
+    opacity: 0.3; 
+    
+    display: block;
+    pointer-events: none; 
+}
+
+#bouncing-logo svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#bouncing-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ---------------------------
+   底部版权栏
+   --------------------------- */
+footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4); /* 半透明白色 */
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 20;
+    padding: 0 20px;
+    line-height: 1.5; /* 增加一点行高，防止两行字挤在一起 */
+}
+
+/* 备案号链接样式 */
+footer a {
+    color: inherit; /* 继承父元素的颜色，防止出现默认蓝/紫色 */
+    text-decoration: none; /* 去掉下划线 */
+    transition: opacity 0.3s;
+}
+
+footer a:hover {
+    opacity: 1; /* 鼠标悬停时变亮，提示可点击 */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .brand-name {
+        font-size: 3rem;
+    }
+    .status-text {
+        font-size: 1rem;
+    }
+    #bouncing-logo {
+        width: 70px;
+    }
+    /* 移动端调整公告栏宽度，防止太宽撑破屏幕 */
+    .notification-pill {
+        width: 90%;
+        justify-content: center;
+        top: 20px;
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
